@@ -1,0 +1,14 @@
+[
+  {
+    "id": "1234",
+    "name": "Jane Doe",
+    "dob": "1985-06-21",
+    "encounter": "2024-06-14 - Chest Pain"
+  },
+  {
+    "id": "5678",
+    "name": "John Smith",
+    "dob": "1990-01-10",
+    "encounter": "2024-06-15 - Shortness of Breath"
+  }
+]
