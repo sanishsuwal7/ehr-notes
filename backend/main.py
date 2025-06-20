@@ -2,9 +2,18 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 import uuid
+import json
+import os
 
 app = FastAPI()
-notes = []
+notes_file = "notes.json"
+
+# Load notes from JSON file if exists
+if os.path.exists(notes_file):
+    with open(notes_file, "r") as f:
+        notes = json.load(f)
+else:
+    notes = []
 
 # CORS setup to allow frontend access
 app.add_middleware(
@@ -26,9 +35,11 @@ class NoteInput(BaseModel):
 @app.post("/notes")
 def add_note(note: NoteInput):
     note_id = str(uuid.uuid4())
-    new_note = note.model_dump()
+    new_note = note.dict()
     new_note["id"] = note_id
     notes.append(new_note)
+    with open(notes_file, "w") as f:
+        json.dump(notes, f, indent=2)
     return {"id": note_id, "note": new_note}
 
 @app.get("/notes")
