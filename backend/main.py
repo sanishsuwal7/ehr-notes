@@ -10,8 +10,13 @@ notes_file = "notes.json"
 
 # Load notes from JSON file if exists
 if os.path.exists(notes_file):
-    with open(notes_file, "r") as f:
-        notes = json.load(f)
+    try:
+        with open(notes_file, "r") as f:
+            content = f.read().strip()
+            notes = json.load(content) if content else []
+    except json.JSONDecodeError:
+        notes = []
+        print("Error decoding JSON, starting with an empty note list.")
 else:
     notes = []
 
