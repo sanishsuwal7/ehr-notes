@@ -88,16 +88,10 @@ def transcribe_audio(file: UploadFile = File(...)):
     plan = extract_from_label(transcript, "Plan")
 
     new_note = {
-        "id": str(uuid.uuid4()),
-        "patient_id": "auto",
-        "patient_name": "Audio Recording",
         "subjective": subjective,
         "objective": objective,
         "assessment": assessment,
         "plan": plan
     }
-    notes.append(new_note)
-    with open(notes_file, "w") as f:
-        json.dump(notes, f, indent=2)
 
     return {"transcript": transcript, "note": new_note}
